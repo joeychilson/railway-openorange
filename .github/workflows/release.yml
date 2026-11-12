@@ -1,0 +1,27 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: auto releases only when the image changed
+        type: choice
+        options: [auto, patch, minor, major]
+        default: auto
+
+permissions:
+  contents: write
+  packages: write
+  pull-requests: read
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    uses: joeychilson/railway-templates/.github/workflows/release.yml@main
+    with:
+      bump: ${{ inputs.bump || 'auto' }}

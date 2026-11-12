@@ -1,0 +1,10 @@
+{
+	"$schema": "https://raw.githubusercontent.com/cloudflare/workers-sdk/main/packages/wrangler/config-schema.json",
+	"name": "openorange-railway-starter",
+	"main": "src/index.ts",
+	"compatibility_date": "2026-09-03",
+	"durable_objects": {
+		"bindings": [{ "name": "COUNTER", "class_name": "Counter" }]
+	},
+	"migrations": [{ "tag": "v1", "new_sqlite_classes": ["Counter"] }]
+}
