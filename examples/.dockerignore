@@ -1,0 +1,9 @@
+# What `orange deploy` leaves out of a build, too: dependencies, which the
+# build installs itself, local state, and local secrets.
+.git
+node_modules
+.open-orange
+.wrangler
+.rivet
+.dev.vars*
+.env*

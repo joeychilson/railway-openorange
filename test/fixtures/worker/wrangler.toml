@@ -1,0 +1,15 @@
+# A Worker for test/smoke-test.sh. It is a wrangler.toml project, with a
+# package from npm, a build.command, and a Wrangler environment, so the test
+# covers each step of openorange-build.
+name = "smoke-worker"
+main = "src/index.js"
+compatibility_date = "2026-09-03"
+
+[build]
+command = "node build.mjs"
+
+[vars]
+GREETING = "hello from the top level"
+
+[env.smoke.vars]
+GREETING = "hello from env.smoke"

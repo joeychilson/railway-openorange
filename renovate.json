@@ -1,0 +1,32 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["github>joeychilson/railway-templates"],
+  "ignorePaths": ["**/node_modules/**", "**/test/**"],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "The image's X.Y tag in the example Dockerfile and the docs. These paths aren't part of the image, so the PRs release nothing. The starter page is, so its tag changes by hand in each minor or major release PR.",
+      "managerFilePatterns": ["/^examples/Dockerfile$/", "/^README\\.md$/", "/^TEMPLATE\\.md$/"],
+      "matchStrings": ["ghcr\\.io/joeychilson/railway-openorange:(?<currentValue>\\d+\\.\\d+)\\b"],
+      "datasourceTemplate": "docker",
+      "packageNameTemplate": "ghcr.io/joeychilson/railway-openorange",
+      "depNameTemplate": "railway-openorange image"
+    }
+  ],
+  "packageRules": [
+    {
+      "description": "OpenOrange pins the RivetKit its nodes run, and a node refuses a Rivet Engine whose X.Y is older. A minor or major OpenOrange release can need a newer Engine than deployments run, so it waits for review and releases as a new major by default. Relabel the PR if its RivetKit still matches the Engine. The Dockerfile's RIVET_ENGINE_MINIMUM check catches a patch that needs a newer Engine.",
+      "matchDepNames": ["OpenOrange"],
+      "matchUpdateTypes": ["minor", "major"],
+      "automerge": false,
+      "addLabels": ["release:major"]
+    },
+    {
+      "description": "The Engine version is also the template's rivet-engine image, which is set in the template editor, so a minor or major Engine release waits for review",
+      "matchDepNames": ["rivet-engine"],
+      "matchUpdateTypes": ["minor", "major"],
+      "automerge": false,
+      "addLabels": ["release:minor"]
+    }
+  ]
+}

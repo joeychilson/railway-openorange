@@ -1,0 +1,8 @@
+// A Worker for test/smoke-test.sh with a Worker Loader binding, which the
+// image doesn't install the packages for, so openorange-build adds them.
+{
+	"name": "loader-smoke",
+	"main": "src/index.js",
+	"compatibility_date": "2026-09-03",
+	"worker_loaders": [{ "binding": "LOADER" }]
+}
